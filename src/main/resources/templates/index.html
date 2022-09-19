@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" th:href="@{/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/3.css}">
+    <!-- <link rel="stylesheet" href="../static/css/3.css"> -->
+    <title>springboot测试</title>
+</head>
+<body>
+    <div>
+        <form action="#" method="post">
+            <label for="username">
+                <span th:text="#{login.username}" ></span>: <input type="text" name="username" id="username" th:placeholder="#{login.username}"><br>
+            </label>
+            <label for="password">
+                <span th:text="#{login.password}" ></span>: <input type="password" name="password" id="password" th:placeholder="#{login.password}" ><br>
+            </label>
+            <label for="remember">
+                <input type="checkbox" name="" id="remember"><span th:text="#{login.remember}" ></span>
+            </label><br>
+            <button type="submit" th:text="#{login.submit}" ></button><br>
+            <a th:href="@{/index(lang=en_US)}" th:text="English"></a>
+            <a th:href="@{/index(lang=zh_CN)}" th:text="中文"></a>
+        </form>
+    </div>
+</body>
+</html>

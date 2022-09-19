@@ -1,0 +1,51 @@
+spring:
+  profiles:
+    active: dev
+  datasource:   # mysql数据库配置
+    username: root
+    password: "123456"
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://182.61.148.121:3306/mybatis?serverTimezone=GMT%2B8&useSSL=True&useUnicode=true&characterEncoding=UTF-8
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 5   # druid 数据源专有配置, Spring Boot 默认是不注入这些属性值的，需要自己绑定
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+
+  redis:   #指定redis信息 (如 host, ip, password)
+    host: 182.61.148.121
+    port: 6379
+    password: 123456  #没有密码可以不用配置这个
+
+  thymeleaf:   # thymeleaf关闭缓存
+    cache: false
+  mvc:  # 自定义 icon
+    favicon:
+      enabled: false
+  messages:   # 国际化
+    basename: i18n.login
+
+mybatis:    # mybatis 的配置
+  mapper-locations: classpath:mapper/*Mapper.xml,classpath:mapper/user/*.xml
+  type-aliases-package: com.example.demo.pojo   # type-aliases-package：指定POJO扫描包来让 mapper.xml 文件的 resultType 自动扫描到自定义POJO，这样就不用每次指定完全限定名
+
+---
+server:
+  port: 8083
+spring:
+  profiles: dev #配置环境的名称
+
+
+---
+server:
+  port: 8084
+spring:
+  profiles: prod  #配置环境的名称
