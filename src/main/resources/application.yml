@@ -1,11 +1,13 @@
 spring:
+  thea
+  thea
   profiles:
     active: dev
   datasource:   # mysql数据库配置
     username: root
-    password: "123456"
+    password: "wangxi@678994"
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://182.61.148.121:3306/mybatis?serverTimezone=GMT%2B8&useSSL=True&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://182.61.148.121:3306/mybatis?serverTimezone=GMT%2B8&useSSL=true&useUnicode=true&characterEncoding=UTF-8
     type: com.alibaba.druid.pool.DruidDataSource
 
     initialSize: 5   # druid 数据源专有配置, Spring Boot 默认是不注入这些属性值的，需要自己绑定
