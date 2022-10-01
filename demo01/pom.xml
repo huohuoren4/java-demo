@@ -56,6 +56,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <!--shiro 依赖-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-starter</artifactId>
+        </dependency>
+
+
         <!--模板引擎-->
         <!--thymeleaf依赖-->
         <dependency>
