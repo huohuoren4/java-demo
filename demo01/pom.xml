@@ -17,7 +17,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.7.3</version>
         </dependency>
         <!--springboot-test 依赖-->
         <dependency>
@@ -62,7 +61,6 @@
             <artifactId>shiro-spring-boot-starter</artifactId>
         </dependency>
 
-
         <!--模板引擎-->
         <!--thymeleaf依赖-->
         <dependency>
@@ -70,7 +68,15 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-
+        <!--swagger2 依赖-->
+        <dependency>
+           <groupId>io.springfox</groupId>
+           <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+           <groupId>io.springfox</groupId>
+           <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
