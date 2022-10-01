@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.pojo.User;
-import com.mysql.cj.jdbc.MysqlDataSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,16 +21,11 @@ class DemoApplicationTests {
 	@Autowired
 	LocaleResolver localeResolver;
 
-	@Autowired
-	User user;
-
 	@Test
 	void dbTest() throws SQLException {
-		System.out.println(user.getId());
 		System.out.println(localeResolver.getClass());
 
 		// 测试mysql 数据库的连通性
-		System.out.println("#######################################");
 		Connection connection = dataSource.getConnection();
 		if ( connection != null ) {
 			System.out.println("数据库连接成功 !!!!");
