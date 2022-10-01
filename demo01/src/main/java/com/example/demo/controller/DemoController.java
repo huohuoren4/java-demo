@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class DemoController {
 
-    @PostMapping("/demo")
+    @PostMapping("/com/example/demo")
     @ResponseBody
     public String demo(HttpServletRequest request ) {
         return "这里是 /demo 路由";

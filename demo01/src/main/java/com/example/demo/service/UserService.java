@@ -6,16 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public User getUser(User user){
-        return userMapper.getUser(user);
+    public User getUserByID(int id){
+        return userMapper.getUserByID(id);
     }
-
+    public List<User> getUser(){
+        return userMapper.getUser();
+    }
+    public User getUserByMap(Map<String, Object> map){
+        return userMapper.getUserByMap(map);
+    }
     public int insertUser(User user){
         return userMapper.insertUser(user);
     }

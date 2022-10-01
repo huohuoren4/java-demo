@@ -1,14 +1,14 @@
 package com.example.demo;
 
 import com.example.demo.pojo.User;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.web.servlet.LocaleResolver;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,8 +19,18 @@ class DemoApplicationTests {
 	DataSource dataSource;
 	@Autowired
 	StringRedisTemplate stringRedisTemplate;
+
+	@Autowired
+	LocaleResolver localeResolver;
+
+	@Autowired
+	User user;
+
 	@Test
-	void contextLoads() throws SQLException {
+	void dbTest() throws SQLException {
+		System.out.println(user.getId());
+		System.out.println(localeResolver.getClass());
+
 		// 测试mysql 数据库的连通性
 		System.out.println("#######################################");
 		Connection connection = dataSource.getConnection();

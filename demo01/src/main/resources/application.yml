@@ -1,6 +1,4 @@
 spring:
-  thea
-  thea
   profiles:
     active: dev
   datasource:   # mysql数据库配置
@@ -43,11 +41,11 @@ mybatis:    # mybatis 的配置
 server:
   port: 8083
 spring:
-  profiles: dev #配置环境的名称
+  profiles: dev
 
 
 ---
 server:
   port: 8084
 spring:
-  profiles: prod  #配置环境的名称
+  profiles: prod

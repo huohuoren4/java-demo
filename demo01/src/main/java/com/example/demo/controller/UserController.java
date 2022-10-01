@@ -2,20 +2,44 @@ package com.example.demo.controller;
 
 import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/getUser/{id}")
-    public Object getUser(@PathVariable int id) {
-        User user = new User(id, "", "", "");
-        User data= userService.getUser(user);
+    @GetMapping("/getUserByID/{id}")
+    public Object getUserByID(@PathVariable int id) {
+        User data= userService.getUserByID(id);
+        if (data != null ) {
+            return data;
+        }
+        return "查询数据为空 !";
+    }
+
+    @GetMapping("/getUser")
+    public Object getUser() {
+        List<User> data = userService.getUser();
+        if (data != null ) {
+            return data;
+        }
+        return "查询数据为空 !";
+    }
+
+    @GetMapping("/getUserByMap")
+    public Object getUserByMap(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", request.getParameter("id"));
+        map.put("username", request.getParameter("username"));
+        User data = userService.getUserByMap(map);
         if (data != null ) {
             return data;
         }
@@ -32,6 +56,11 @@ public class UserController {
         return "数据添加失败 !";
     }
 
+    /**
+     * 更新用户信息
+     * @param request
+     * @return
+     */
     @PostMapping("/updateUser")
     public String updateUser(HttpServletRequest request) {
         User user = new User(Integer.parseInt(request.getParameter("id")), request.getParameter("username"), null, null);
