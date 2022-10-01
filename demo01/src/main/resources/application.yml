@@ -30,8 +30,11 @@ spring:
   mvc:  # 自定义 icon
     favicon:
       enabled: false
+    pathmatch:
+      matching-strategy: ant_path_matcher
   messages:   # 国际化
     basename: i18n.login
+
 
 mybatis:    # mybatis 的配置
   mapper-locations: classpath:mapper/*Mapper.xml,classpath:mapper/user/*.xml

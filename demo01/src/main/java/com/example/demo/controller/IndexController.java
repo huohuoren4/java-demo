@@ -20,7 +20,7 @@ public class IndexController {
         return "index";
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
         // 获取当前的用户
         Subject subject = SecurityUtils.getSubject();
@@ -36,11 +36,6 @@ public class IndexController {
             model.addAttribute("msg", "密码错误");
             return "login";
         }
-    }
-
-    @GetMapping("/login01")
-    public String getLogin() {
-        return "login";
     }
 
     @GetMapping("/addUser")
