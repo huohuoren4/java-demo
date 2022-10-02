@@ -2,22 +2,26 @@ package com.example.demo.controller;
 
 import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
-import lombok.val;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户管理")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/getUserByID/{id}")
+    @GetMapping( "/getUserByID/{id}")
+    @ApiOperation("通过ID查询用户")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "用户id")
+    })
     public Object getUserByID(@PathVariable int id) {
         User data= userService.getUserByID(id);
         if (data != null ) {
@@ -27,6 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/getUser")
+    @ApiOperation("查询所有用户")
     public Object getUser() {
         List<User> data = userService.getUser();
         if (data != null ) {
@@ -36,10 +41,15 @@ public class UserController {
     }
 
     @GetMapping("/getUserByMap")
-    public Object getUserByMap(HttpServletRequest request) {
+    @ApiOperation("通过名字查询用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户id"),
+            @ApiImplicitParam(name = "username", value = "用户名"),
+    })
+    public Object getUserByMap(@RequestParam(required = false) int id, @RequestParam(required = false) String username) {
         Map<String, Object> map = new HashMap<>();
-        map.put("id", request.getParameter("id"));
-        map.put("username", request.getParameter("username"));
+        map.put("id", id);
+        map.put("username", username);
         User data = userService.getUserByMap(map);
         if (data != null ) {
             return data;
@@ -48,8 +58,9 @@ public class UserController {
     }
 
     @PostMapping("/insertUser")
-    public String insertUser(HttpServletRequest request) {
-        User user = new User(null, request.getParameter("username"), request.getParameter("password"), request.getParameter("realname"));
+    @ApiOperation("插入用户数据")
+    @ApiParam(name = "user", value = "用户数据")
+    public String insertUser(@RequestBody User user, @RequestHeader String token) {
         int flag = userService.insertUser(user);
         if (flag != 0) {
             return "数据添加成功 !";
@@ -59,12 +70,17 @@ public class UserController {
 
     /**
      * 更新用户信息
-     * @param request
+     * @param: request
      * @return
      */
     @PostMapping("/updateUser")
-    public String updateUser(HttpServletRequest request) {
-        User user = new User(Integer.parseInt(request.getParameter("id")), request.getParameter("username"), null, null);
+    @ApiOperation("更新用户信息")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "用户id"),
+        @ApiImplicitParam(name = "username", value = "用户名"),
+    })
+    public String updateUser(@RequestParam int id ,@RequestParam String username ) {
+        User user = new User(id, username, null, null);
         int flag = userService.updateUser(user);
         if (flag != 0) {
             return "数据更新成功 !";
@@ -73,8 +89,12 @@ public class UserController {
     }
 
     @PostMapping("/deleteUser")
-    public String deleteUser(HttpServletRequest request) {
-        User user = new User(Integer.parseInt(request.getParameter("id")), null, null, null);
+    @ApiOperation("输出用户")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "用户id"),
+    })
+    public String deleteUser(@RequestParam int id) {
+        User user = new User(id, null, null, null);
         int flag = userService.deleteUser(user);
         if (flag != 0) {
             return "删除数据成功 !";

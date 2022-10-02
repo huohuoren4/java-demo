@@ -5,10 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -25,7 +22,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  * @author Admin
  */
 @Configuration
-@EnableKnife4j
+//@EnableKnife4j
 @EnableOpenApi
 public class SwaggerConfig {
 
@@ -34,16 +31,23 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .enable(true)//是否启用：注意生产环境需要关闭
                 .groupName("spring-boot-2.7.3")
-                .genericModelSubstitutes(DeferredResult.class)
-                .useDefaultResponseMessages(false)
-                .forCodeGeneration(true)
-                .ignoredParameterTypes(CookieValue.class)
                 .apiInfo(apiInfo())
                 .select()
-                //以下拦截配置可以三选一，根据需要进行添加
                 .apis(RequestHandlerSelectors.basePackage("com.example.demo.controller"))
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+//                .paths(PathSelectors.any())
+                // 只扫面 "/user/**" 路径下
+                .paths(PathSelectors.ant("/user/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket createRestApis01() {
+        return new Docket(DocumentationType.OAS_30)
+                .enable(true)//是否启用：注意生产环境需要关闭
+                .groupName("spring-boot-2.7.3-v1")
+                .apiInfo(apiInfo01())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.example.demo.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -57,6 +61,18 @@ public class SwaggerConfig {
                 // 作者信息
                 .contact(new Contact("qihh", "https://www.baidu.com/", "qihh@136.com"))
                 .version("0.0.1")
+                .build();
+    }
+
+    private ApiInfo apiInfo01() {
+        return new ApiInfoBuilder()
+                .title("使用swagger生成的接口文档-v1")
+                .description("开发测试")
+                // 服务条款URL
+                .termsOfServiceUrl("https://www.baidu.com/")
+                // 作者信息
+                .contact(new Contact("qihh", "https://www.baidu.com/", "qihh@136.com"))
+                .version("0.0.1-v1")
                 .build();
     }
 

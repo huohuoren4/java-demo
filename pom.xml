@@ -38,7 +38,6 @@
 
         <!--Swagger3 依赖-->
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
-        <springfox-swagger-ui.version>3.0.0</springfox-swagger-ui.version>
         <knife4j-spring-boot-starter.version>3.0.3</knife4j-spring-boot-starter.version>
 
         <!--spring-cloud-->
@@ -143,11 +142,6 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${springfox-boot-starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox-swagger-ui.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>

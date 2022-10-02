@@ -10,7 +10,7 @@ public class UserRealm extends AuthorizingRealm {
     /**
      * 授权
      *
-     * @param principalCollection
+     * @param principalCollection: wewewe
      * @return
      */
     @Override
