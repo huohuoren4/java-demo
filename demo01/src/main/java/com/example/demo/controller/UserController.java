@@ -6,33 +6,36 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/usermgr")
 @Api(tags = "用户管理")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping( "/getUserByID/{id}")
-    @ApiOperation("通过ID查询用户")
+    @GetMapping( "/users/{user_id}")
+    @ApiOperation("查询用户详情")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "用户id")
+        @ApiImplicitParam(name = "user_id", value = "用户id"),
+        @ApiImplicitParam(name = "token", value = "用户身份凭证")
     })
-    public Object getUserByID(@PathVariable int id) {
-        User data= userService.getUserByID(id);
+    public Object getUserByID(@PathVariable int user_id , @RequestHeader String token ) {
+        User data= userService.getUserByID(user_id);
         if (data != null ) {
             return data;
         }
         return "查询数据为空 !";
     }
 
-    @GetMapping("/getUser")
-    @ApiOperation("查询所有用户")
-    public Object getUser() {
+    @GetMapping("/users")
+    @ApiOperation("查询用户列表")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "name", value = "用户名"),
+        @ApiImplicitParam(name = "token", value = "用户身份凭证")
+    })
+    public Object getUser(@RequestParam(required = false) String name, @RequestHeader String token ) {
         List<User> data = userService.getUser();
         if (data != null ) {
             return data;
@@ -40,27 +43,13 @@ public class UserController {
         return "查询数据为空 !";
     }
 
-    @GetMapping("/getUserByMap")
-    @ApiOperation("通过名字查询用户")
+    @PostMapping("/users")
+    @ApiOperation("创建用户")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "用户id"),
-            @ApiImplicitParam(name = "username", value = "用户名"),
+        @ApiImplicitParam(name = "user", value = "用户信息"),
+        @ApiImplicitParam(name = "token", value = "用户身份凭证")
     })
-    public Object getUserByMap(@RequestParam(required = false) int id, @RequestParam(required = false) String username) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("username", username);
-        User data = userService.getUserByMap(map);
-        if (data != null ) {
-            return data;
-        }
-        return "查询数据为空 !";
-    }
-
-    @PostMapping("/insertUser")
-    @ApiOperation("插入用户数据")
-    @ApiParam(name = "user", value = "用户数据")
-    public String insertUser(@RequestBody User user, @RequestHeader String token) {
+    public String insertUser(@RequestBody User user, @RequestHeader String token ) {
         int flag = userService.insertUser(user);
         if (flag != 0) {
             return "数据添加成功 !";
@@ -68,19 +57,15 @@ public class UserController {
         return "数据添加失败 !";
     }
 
-    /**
-     * 更新用户信息
-     * @param: request
-     * @return
-     */
-    @PostMapping("/updateUser")
-    @ApiOperation("更新用户信息")
+    @PutMapping("/users/{user_id}")
+    @ApiOperation("更新用户")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "用户id"),
-        @ApiImplicitParam(name = "username", value = "用户名"),
+        @ApiImplicitParam(name = "user_id", value = "用户id"),
+        @ApiImplicitParam(name = "user", value = "用户信息"),
+        @ApiImplicitParam(name = "token", value = "用户身份凭证")
     })
-    public String updateUser(@RequestParam int id ,@RequestParam String username ) {
-        User user = new User(id, username, null, null);
+    public String updateUser(@RequestParam int user_id ,@RequestBody User user ,@RequestHeader String token ) {
+        user.setId(user_id);
         int flag = userService.updateUser(user);
         if (flag != 0) {
             return "数据更新成功 !";
@@ -88,13 +73,14 @@ public class UserController {
         return "数据更新失败 !";
     }
 
-    @PostMapping("/deleteUser")
-    @ApiOperation("输出用户")
+    @DeleteMapping("/users/{user_id}")
+    @ApiOperation("删除用户")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "用户id"),
+        @ApiImplicitParam(name = "user_id", value = "用户id"),
+        @ApiImplicitParam(name = "token", value = "用户身份凭证")
     })
-    public String deleteUser(@RequestParam int id) {
-        User user = new User(id, null, null, null);
+    public String deleteUser(@PathVariable int user_id, @RequestHeader String token ) {
+        User user = new User(user_id, null, null, null);
         int flag = userService.deleteUser(user);
         if (flag != 0) {
             return "删除数据成功 !";
@@ -102,3 +88,6 @@ public class UserController {
         return "删除数据失败 !";
     }
 }
+
+
+
