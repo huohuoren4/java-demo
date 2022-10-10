@@ -61,8 +61,8 @@ public class MyMvcConfigurer implements WebMvcConfigurer {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("dwsManager") DefaultWebSecurityManager dwsManager){
         ShiroFilterFactoryBean sffBean = new ShiroFilterFactoryBean();
         HashMap<String, String> map = new HashMap<>();
-        map.put("/", "authc");
-        map.put("/index", "authc");
+        map.put("/", "anon");
+        map.put("/index", "anon");
         map.put("/addUser", "perms[user:add]");
         map.put("/deleteUser", "perms[user:delete]");
         sffBean.setLoginUrl("/login");
