@@ -2,10 +2,10 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.context.request.async.DeferredResult;
 
 
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,19 +17,17 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * 文档访问地址：http://ip:port/swagger-ui/index.html
- * 添加Knife4j可以导出导出离线文档，访问地址：http://ip:port/doc.html
  *
  * @author Admin
  */
 @Configuration
-//@EnableKnife4j
 @EnableOpenApi
 public class SwaggerConfig {
 
     @Bean
-    public Docket createRestApis() {
+    public Docket createRestApis(Environment environment) {
         return new Docket(DocumentationType.OAS_30)
-                .enable(true)//是否启用：注意生产环境需要关闭
+                .enable(getEnv(environment))//是否启用：注意生产环境需要关闭
                 .groupName("spring-boot-2.7.3")
                 .apiInfo(apiInfo())
                 .select()
@@ -41,9 +39,9 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public Docket createRestApis01() {
+    public Docket createRestApis01(Environment environment) {
         return new Docket(DocumentationType.OAS_30)
-                .enable(true)//是否启用：注意生产环境需要关闭
+                .enable(getEnv(environment))//是否启用：注意生产环境需要关闭
                 .groupName("spring-boot-2.7.3-v1")
                 .apiInfo(apiInfo01())
                 .select()
@@ -74,6 +72,11 @@ public class SwaggerConfig {
                 .contact(new Contact("qihh", "https://www.baidu.com/", "qihh@136.com"))
                 .version("0.0.1-v1")
                 .build();
+    }
+
+    public boolean getEnv(Environment environment){
+        Profiles profiles = Profiles.of("dev");
+        return environment.acceptsProfiles(profiles);
     }
 
 }
